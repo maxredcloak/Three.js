@@ -3,11 +3,12 @@ import applyPhysics from './engine/Physics.js'
 import CameraController from './UI_components/CameraController.js'
 import GeometryBuilder from'./builders/objects/GeometryBuilder.js'
 import levelZero from './builders/levels/levelZero.js'
-import getInteractions from './engine/interactiveTrigger.js'
+import {getInteractions, getInteractives} from './engine/interactiveTrigger.js'
 
 export default class GameScene{
   constructor(window,document){
     this.objects =[];
+    this.interactiveObjects = [];
     this.main = undefined;
     this.interactive = undefined;
     this.intractiveColor = undefined;
@@ -19,6 +20,7 @@ export default class GameScene{
     this.objects = result.objects;
     this.main = result.main;
     this.scene = result.scene;
+    this.interactiveObjects = result.interactiveObjects;
   }
   animate(turn,forward) {
     this.updatePlayer(turn,forward);
@@ -29,12 +31,12 @@ export default class GameScene{
   updatePlayer(t,f){
     this.main.mesh.rotation.y = this.cameraController.getAngle()
     this.main.setSpeed(t,0,f,this.cameraController.getAngle(), this.cameraController.getAngle());
-    applyPhysics(this.main,this.objects);
+    applyPhysics(this.main,this.objects,this.interactiveObjects);
     this.main.render();
     this.cameraController.alignCamera(this.main.mesh.position);
   }
   checkInteract(){
-    var tmpinteractive = getInteractions(this.main.mesh.position, this.cameraController.getAngle(), this.objects);
+    var tmpinteractive = getInteractives(this.main.mesh.position, this.cameraController.getAngle(), this.interactiveObjects);
     if(tmpinteractive && this.interactive !== tmpinteractive){
       if(this.interactive){
         this.interactive.material.color.setHex(this.intractiveColor);

@@ -1,5 +1,7 @@
 import GeometryBuilder from '../objects/GeometryBuilder.js';
 import Character from '../../objects/Character.js'
+import Growbox from '../../objects/Growbox.js';
+import InteractiveObject from '../../objects/InteractiveObject.js';
 import {createScene} from './utils/sceneUtils.js'
 
 export default function levelZero(cameraController){
@@ -12,12 +14,20 @@ export default function levelZero(cameraController){
     main = new Character(main);
     scene.add(cameraController.camera);
     scene.add(main.mesh);
+    let cuboGrow = new GeometryBuilder()
+      .setSize(5,5,5)
+      .setPosition(-34, 0, 0)
+      .setColor(0x00ff00)
+      .build();
+    cuboGrow = new InteractiveObject(cuboGrow);
+    let interactiveObjects = [cuboGrow];
+    scene.add(cuboGrow.mesh);
     var cuboblanco = new GeometryBuilder()
       .setSize(5,5,5)
       .setPosition(10,0,10)
       .build();
     scene.add(cuboblanco);
-    objects.push(cuboblanco);
+    interactiveObjects.push(new InteractiveObject(cuboblanco));
     var pared1 = new GeometryBuilder()
       .setSize(2, 40, 40)
       .setPosition(-20, 20, 0)
@@ -34,6 +44,7 @@ export default function levelZero(cameraController){
     return {
       main: main,
       objects: objects,
+      interactiveObjects: interactiveObjects,
       scene: scene
     };
   }

@@ -3,7 +3,8 @@ export default class JoystickController{
     this.joyManager = undefined;
     this.forward = 0;
     this.turn =0;
-    this.createJoystick(document.getElementById('joystickWrapper1'))
+    this.createJoystick(document.getElementById('joystickWrapper1'));
+  //  this.createButton();
   }
   getDirection(){
     return {forward:this.forward,turn:this.turn};
