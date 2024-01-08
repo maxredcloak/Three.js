@@ -6,7 +6,7 @@ import levelZero from './builders/levels/levelZero.js'
 import {getInteractions, getInteractives} from './engine/interactiveTrigger.js'
 
 export default class GameScene{
-  constructor(window,document){
+  constructor(window,document,jumpPress){
     this.objects =[];
     this.interactiveObjects = [];
     this.main = undefined;
